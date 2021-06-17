@@ -28,6 +28,18 @@ PATH=${PATH}:~/opt/compliance-utils/bin
 
 # Setting up Yocto and running yoga
 
+## Clone this repo
+
+```
+git clone https://github.com/hesa/yocto-stuff.git
+```
+
+## Enter the repo
+
+```
+cd yocto-stuff
+```
+
 ## Build a yocto image from scratch
 
 ```
