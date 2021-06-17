@@ -34,8 +34,10 @@ PATH=${PATH}:~/opt/compliance-utils/bin
 install-yocto.sh
 ```
 
-## 
+## Running yoga
 
 ```
 run-yoga.sh
 ```
+
+# Look at the reports created by Yoga
