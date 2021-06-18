@@ -5,6 +5,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 CURR_DIR=$(pwd)
+POKY_GIT="https://git.yoctoproject.org/cgit/cgit.cgi/poky/"
+POKY_VERSION="poky-dunfell-23.0.8"
+POKY_TAR_FILE="${POKY_VERSION}.tar.gz"
+POKY_TAR="https://git.yoctoproject.org/cgit/cgit.cgi/poky/snapshot/${POKY_TAR_FILE}"
 
 exit_on_error()
 {
@@ -32,21 +36,32 @@ get_poky()
         return
     fi
 
-    POKY_GIT="https://git.yoctoproject.org/cgit/cgit.cgi/poky/"
-    git clone $POKY_GIT
-    exit_on_error $? "git clone $POKY_GIT"
+    if [ "${POKY_GIT}" != "" ]
+    then
+        POKY_GIT="https://git.yoctoproject.org/cgit/cgit.cgi/poky/"
+        git clone $POKY_GIT
+        exit_on_error $? "git clone $POKY_GIT"
+        
+        cd poky
+        exit_on_error $? "cd poky"
+        
+        git fetch --tags
+        exit_on_error $? "git fetch --tags"
 
-    cd poky
-    exit_on_error $? "cd poky"
+        git checkout tags/yocto-3.2.2 -b my-yocto-3.2.2
+        exit_on_error $? "git checkout tags/yocto-3.2.2 -b my-yocto-3.2.2"
 
-    git fetch --tags
-    exit_on_error $? "git fetch --tags"
+        cd -
+    else
+        curl -LJO "${POKY_TAR}" 
+        exit_on_error $? "curl -LJO ${POKY_TAR}" 
 
-    git checkout tags/yocto-3.2.2 -b my-yocto-3.2.2
-    exit_on_error $? "git checkout tags/yocto-3.2.2 -b my-yocto-3.2.2"
+        tar zxvf "${POKY_TAR_FILE}"
+        exit_on_error $? "tar xvf ${POKY_TAR_FILE}" 
 
-    cd -
-
+        ln -s ${POKY_VERSION} poky
+        exit_on_error $? "ln -s ${POKY_VERSION} poky" 
+    fi
     cd $CURR_DIR
 }
 
@@ -99,6 +114,12 @@ build()
 if [ "$1" == "--install-requirements" ]
 then
     install_req
+    shift
+fi
+if [ "$1" == "--no-git" ]
+then
+    POKY_GIT=""
+    shift
 fi
 
 get_poky
@@ -106,4 +127,3 @@ get_poky
 prepare_build
 
 build
-
