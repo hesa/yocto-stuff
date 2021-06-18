@@ -40,10 +40,16 @@ git clone https://github.com/hesa/yocto-stuff.git
 cd yocto-stuff
 ```
 
+## Install required software
+
+```
+./install-yocto.sh --install-requirements
+```
+
 ## Build a yocto image from scratch
 
 ```
-install-yocto.sh
+./install-yocto.sh
 ```
 
 ## Running yoga
