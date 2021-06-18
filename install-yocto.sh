@@ -31,9 +31,10 @@ get_poky()
         echo poky dir already exists
         return
     fi
-    
-    git clone git://git.yoctoproject.org/poky
-    exit_on_error $? "git clone git://git.yoctoproject.org/poky"
+
+    POKY_GIT="https://git.yoctoproject.org/cgit/cgit.cgi/poky/"
+    git clone $POKY_GIT
+    exit_on_error $? "git clone $POKY_GIT"
 
     cd poky
     exit_on_error $? "cd poky"
@@ -95,8 +96,7 @@ build()
     exit_on_error $? "bitbake core-image-minimal"
 }
 
-
-if [ "$1" = "--install-requirements" ]
+if [ "$1" == "--install-requirements" ]
 then
     install_req
 fi
