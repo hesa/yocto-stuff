@@ -9,8 +9,6 @@ POKY_GIT="https://git.yoctoproject.org/cgit/cgit.cgi/poky/"
 POKY_VERSION="poky-387ab5f18b17c3af3e9e30dc58584641a70f359f"
 POKY_TAR_FILE="${POKY_VERSION}.tar.bz2"
 POKY_TAR="http://downloads.yoctoproject.org/releases/yocto/yocto-4.0.3/poky-387ab5f18b17c3af3e9e30dc58584641a70f359f.tar.bz2"
-#https://git.yoctoproject.org/cgit/cgit.cgi/poky/snapshot/${POKY_TAR_FILE}"
-          
 exit_on_error()
 {
     RET=$1
