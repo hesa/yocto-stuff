@@ -87,8 +87,8 @@ prepare_build()
     EPIPHANY=$(grep -c epiphany conf/local.conf )
     if [ $EPIPHANY -eq 0 ]
     then
-        to_conf "IMAGE_INSTALL_append = \" epiphany  \""
-        to_conf "IMAGE_INSTALL_append = \" elfutils \""
+        to_conf "IMAGE_INSTALL += \" epiphany  \""
+        to_conf "IMAGE_INSTALL += \" elfutils \""
         
         to_conf "INHERIT += \"archiver\""
         to_conf "ARCHIVER_MODE[src] = \"original\""
