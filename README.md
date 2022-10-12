@@ -9,7 +9,18 @@ Yocto build to use as a test bench for [Compliance Utils](https://github.com/vin
 
 # Preparations
 
-## Install Compliance Utils
+## Install some tools:
+
+These are the tools I did not have installed (Debian 10) but required by Yocto. Might not be sufficient for you:
+
+```
+sudo apt-get install chrpath diffstat gawk zstd lz4
+```
+
+
+## Install Compliance Utils (if you wanna try yoga out)
+
+If you do not want to install and try yoga out, skip the following and continue to *Build a yocto image from scratch*.
 
 Assuming you want to install [Compliance Utils](https://github.com/vinland-technology/compliance-utils) in `opt` in your home directory:
 
