@@ -5,10 +5,13 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 CURR_DIR=$(pwd)
-POKY_GIT="https://git.yoctoproject.org/cgit/cgit.cgi/poky/"
-POKY_VERSION="poky-387ab5f18b17c3af3e9e30dc58584641a70f359f"
-POKY_TAR_FILE="${POKY_VERSION}.tar.bz2"
-POKY_TAR="http://downloads.yoctoproject.org/releases/yocto/yocto-4.0.3/poky-387ab5f18b17c3af3e9e30dc58584641a70f359f.tar.bz2"
+POKY_GIT="https://git.yoctoproject.org/poky"
+POKY_VERSION="poky-mickledore-4.2.1"
+POKY_TAR_FILE="${POKY_VERSION}.tar.gz"
+POKY_TAR="https://git.yoctoproject.org/poky/snapshot/${POKY_TAR_FILE}"
+
+
+
 exit_on_error()
 {
     RET=$1
@@ -47,8 +50,8 @@ get_poky()
         git fetch --tags
         exit_on_error $? "git fetch --tags"
 
-        git checkout tags/yocto-3.2.2 -b my-yocto-3.2.2
-        exit_on_error $? "git checkout tags/yocto-3.2.2 -b my-yocto-3.2.2"
+        git checkout tags/yocto-4.2.1 -b my-yocto-4.2.1
+        exit_on_error $? "git checkout tags/yocto-4.2.1 -b my-yocto-4.2.1"
 
         cd -
     else
@@ -57,11 +60,15 @@ get_poky()
             curl -LJO "${POKY_TAR}" 
             exit_on_error $? "curl -LJO ${POKY_TAR}" 
         fi
-        tar jxvf "${POKY_TAR_FILE}"
+	
+        tar zxvf "${POKY_TAR_FILE}"
         exit_on_error $? "tar xvf ${POKY_TAR_FILE}" 
 
-        ln -s ${POKY_VERSION} poky
-        exit_on_error $? "ln -s ${POKY_VERSION} poky" 
+	if [ ! -h poky ]
+	then
+            ln -s ${POKY_VERSION} poky
+            exit_on_error $? "ln -s ${POKY_VERSION} poky"
+	fi
     fi
     cd $CURR_DIR
 }
@@ -73,6 +80,8 @@ to_conf()
 
 prepare_build()
 {
+    pwd
+    
     cd poky
     exit_on_error $? "cd poky"
 
